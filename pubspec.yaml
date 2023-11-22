@@ -1,0 +1,83 @@
+name: ham_certificator
+description: A new Flutter project.
+
+publish_to: 'none' 
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  guarani:
+    path: libraries/guarani
+
+  cupertino_icons: ^1.0.2
+  dartz: ^0.10.1
+  http: ^1.1.0
+  pdf: ^3.10.6
+  google_fonts: ^6.1.0
+  printing: ^5.11.1
+  firebase_core: ^2.21.0
+  go_router: ^12.1.0
+  get_it: ^7.6.4
+  cloud_firestore: ^4.13.1
+  cloud_firestore_web: ^3.8.5
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/events/
+
+  fonts:
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins-SemiBold.ttf 
+
+  
+  
+  
+  
+
+  
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  #
+  
+  

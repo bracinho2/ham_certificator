@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "795826839182",
+    "project_id": "ham-certificator",
+    "storage_bucket": "ham-certificator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:795826839182:android:069f2b855f676f50b473df",
+        "android_client_info": {
+          "package_name": "com.example.ham_certificator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlbAEcTMtdv-7Ianx-AT2vw_HLUi2lpFo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
