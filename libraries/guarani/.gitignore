@@ -87,7 +87,7 @@ lib/generated_plugin_registrant.dart
 **/ios/Runner/GeneratedPluginRegistrant.*
 
 #Firebase related
-**/lib/firebase_options.*
+**/lib/firebase_options.dart
 
 # Exceptions to above rules.
 !**/ios/**/default.mode1v3
