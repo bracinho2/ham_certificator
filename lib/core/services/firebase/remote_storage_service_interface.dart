@@ -14,7 +14,7 @@ abstract class RemoteStorage {
     required String subcollectionPath,
   });
 
-  Future<Map<String, dynamic>?> getByID({
+  Future<Map<String, dynamic>> getByID({
     required String id,
     required String collectionPath,
   });

@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "ham_certificator",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "ham_certificator (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "ham_certificator (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "guarani",
+            "cwd": "libraries/guarani",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "guarani (profile mode)",
+            "cwd": "libraries/guarani",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "guarani (release mode)",
+            "cwd": "libraries/guarani",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

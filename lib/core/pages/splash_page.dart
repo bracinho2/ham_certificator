@@ -14,14 +14,17 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    goTo();
+  }
+
+  void goTo() async {
+    await Future.delayed(const Duration(seconds: 3)).then(
+      (value) => context.go('/home'),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(const Duration(seconds: 3)).then(
-      (value) => context.go('/home'),
-    );
-
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       body: Center(

@@ -1,15 +1,11 @@
 import 'package:get_it/get_it.dart';
-import 'package:ham_certificator/home_page/presenter/facade/home_page_facade.dart';
+import 'package:ham_certificator/core/services/firebase/remote_storage_service_interface.dart';
+import 'package:ham_certificator/home_page/presenter/controller/home_page_controller.dart';
 
-import '../events/controller/event_controller.dart';
 import '../main.dart';
-import '../persons/controller/person_controller.dart';
 
 void homePageInjections() {
   getIt.registerLazySingleton(
-    () => HomePageFacade(
-      eventController: GetIt.I.get<EventController>(),
-      personController: GetIt.I.get<PersonController>(),
-    ),
+    () => HomePageController(GetIt.I.get<RemoteStorage>()),
   );
 }

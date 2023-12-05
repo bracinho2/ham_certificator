@@ -18,6 +18,10 @@ class EventModel {
     required this.imageUrl,
     required this.hasAvailableCertificates,
     required this.hasPageDetails,
+    required this.price,
+    required this.language,
+    required this.contact,
+    required this.hasCertification,
   });
 
   final String uid;
@@ -34,6 +38,10 @@ class EventModel {
   final String imageUrl;
   final bool hasAvailableCertificates;
   final bool hasPageDetails;
+  final String price;
+  final String language;
+  final String contact;
+  final bool hasCertification;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -51,6 +59,10 @@ class EventModel {
       'image_url': imageUrl,
       'has_available_certificates': hasAvailableCertificates,
       'has_page_details': hasPageDetails,
+      'price': price,
+      'language': language,
+      'contact': contact,
+      'hasCertification': hasCertification,
     };
   }
 
@@ -70,6 +82,10 @@ class EventModel {
       imageUrl: map['image_url'],
       hasAvailableCertificates: map['has_available_certificates'],
       hasPageDetails: map['has_page_details'],
+      price: map['price'],
+      language: map['language'],
+      contact: map['contact'],
+      hasCertification: map['has_certification'],
     );
   }
 

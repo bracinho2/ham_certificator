@@ -39,8 +39,10 @@ class FirebaseRemoteStorage implements RemoteStorage {
   }
 
   @override
-  Future<Map<String, dynamic>> getByID(
-      {required String id, required String collectionPath}) async {
+  Future<Map<String, dynamic>> getByID({
+    required String id,
+    required String collectionPath,
+  }) async {
     final response = await _firestore.collection(collectionPath).doc(id).get();
     final map = {
       'uid': response.reference.id,

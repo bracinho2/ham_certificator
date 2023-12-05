@@ -1,149 +1,213 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:guarani/guarani.dart';
-import 'package:ham_certificator/home_page/presenter/pages/widgets/available_events_list_widget.dart';
-import 'package:ham_certificator/home_page/presenter/pages/widgets/past_events_list_widget.dart';
-
-import '../../../events/controller/event_controller.dart';
-import '../facade/home_page_facade.dart';
-import 'widgets/carousel_events_widget.dart';
+import 'package:ham_certificator/core/extensions/date_time_extension.dart';
+import 'package:ham_certificator/events/model/event_model.dart';
+import 'package:ham_certificator/home_page/presenter/controller/home_page_controller.dart';
+import 'package:ham_certificator/home_page/presenter/states/home_page_state.dart';
+import 'package:localization/localization.dart';
+import 'widgets/alert_dialog_translate_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
     super.key,
-    required this.facade,
+    required this.controller,
   });
 
-  final HomePageFacade facade;
+  final HomePageController controller;
 
   @override
   State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-  HomePageFacade get _facade => widget.facade;
+  HomePageController get _controller => widget.controller;
 
   @override
   void initState() {
     super.initState();
-    _facade.init();
+    _controller.init();
   }
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context);
     return Scaffold(
-      appBar: const GuaraniHeaderMenuWidget(),
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                CarouselEventsWidget(
-                  eventController: GetIt.I.get<EventController>(),
-                ),
-                if (constraints.maxWidth < 800)
-                  const Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(24),
-                        child: TitleWidget(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(24),
-                        child: DescriptionTextWidget(),
-                      ),
-                    ],
-                  ),
-                if (constraints.maxWidth > 800)
-                  const Padding(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 100, vertical: 50),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 4,
-                          child: TitleWidget(
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                        SizedBox(width: 50),
-                        Expanded(
-                          flex: 6,
-                          child: DescriptionTextWidget(),
-                        ),
-                      ],
-                    ),
-                  ),
-                const Divider(
-                  thickness: 2,
-                ),
-                const GuaraniTitleSeparatorWidget(
-                  title: 'Agenda',
-                  subtitle: 'Clique no Evento para Informações',
-                ),
-                AvailableEventsListWidget(
-                  eventController: GetIt.I.get<EventController>(),
-                ),
-                const Divider(
-                  thickness: 2,
-                ),
-                const GuaraniTitleSeparatorWidget(
-                  title: 'Certificados',
-                  subtitle: 'Clique no evento e baixe seu certificado',
-                ),
-                PastEventsListWidget(
-                  eventController: GetIt.I.get<EventController>(),
-                ),
-              ],
-            ),
+      appBar: GuaraniHeaderMenuWidget(
+        translate: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const ModalTranslateWidget();
+            },
           );
         },
       ),
-      bottomNavigationBar: const GuaraniFooterWidget(),
-    );
-  }
-}
+      body: ValueListenableBuilder<HomePageState>(
+        valueListenable: _controller,
+        builder: (context, state, _) {
+          if (state is HomePageLoadingState) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-class TitleWidget extends StatelessWidget {
-  const TitleWidget(
-      {super.key, this.textSize = 50, this.textAlign = TextAlign.center});
+          if (state is HomePageSuccessState) {
+            final events = state.events;
+            return LayoutBuilder(
+              builder: (context, constraints) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GuaraniCarouselWidget(
+                        items: events
+                            .map(
+                              (e) => GuaraniCarouselItem(
+                                eventName: e.name,
+                                eventLocal:
+                                    '${e.city} - ${e.state} - ${e.country}',
+                                eventDate:
+                                    e.startAt.toHumanDate(locale: locale),
+                                eventMessage: e.startAt.isBefore(DateTime.now())
+                                    ? 'event-past'.i18n()
+                                    : 'event-future'.i18n(),
+                                imageUrl: e.imageUrl.isEmpty
+                                    ? 'assets/placeholder.jpg'
+                                    : e.imageUrl,
+                                onTap: (value) {},
+                              ),
+                            )
+                            .toList(),
+                      ),
+                      if (constraints.maxWidth < 800)
+                        Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(24),
+                              child: GuaraniTitleWidget(
+                                label: 'system-title'.i18n(),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(24),
+                              child: GuaraniTextDescriptionWidget(
+                                label: 'hamcertificator-description'.i18n(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      if (constraints.maxWidth > 800)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 100, vertical: 50),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 4,
+                                child: GuaraniTitleWidget(
+                                  label: 'system-title'.i18n(),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 50,
+                              ),
+                              Expanded(
+                                flex: 6,
+                                child: GuaraniTextDescriptionWidget(
+                                  label: 'hamcertificator-description'.i18n(),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      const Divider(
+                        thickness: 2,
+                      ),
+                      GuaraniTitleSeparatorWidget(
+                        title: 'event-scheduler'.i18n(),
+                        subtitle: 'event-info'.i18n(),
+                      ),
+                      EventListWidget(
+                        events: events
+                            .where((event) =>
+                                event.startAt.isAfter(DateTime.now()))
+                            .toList(),
+                      ),
+                      const Divider(
+                        thickness: 2,
+                      ),
+                      GuaraniTitleSeparatorWidget(
+                        title: 'certificate-title'.i18n(),
+                        subtitle: 'certificate-info'.i18n(),
+                      ),
+                      EventListWidget(
+                        events: events
+                            .where((event) =>
+                                event.startAt.isBefore(DateTime.now()))
+                            .toList(),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
 
-  final double textSize;
-  final TextAlign textAlign;
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      'Ham Certificator',
-      textAlign: textAlign,
-      style: TextStyle(
-        fontFamily: 'Poppins',
-        fontSize: textSize,
-        fontWeight: FontWeight.w500,
+          return const SizedBox.shrink();
+        },
+      ),
+      bottomNavigationBar: GuaraniFooterWidget(
+        onLongPress: () => context.go('/login'),
       ),
     );
   }
 }
 
-class DescriptionTextWidget extends StatelessWidget {
-  const DescriptionTextWidget({
+class EventListWidget extends StatefulWidget {
+  const EventListWidget({
     super.key,
-    this.textSize = 20,
-    this.textAlign = TextAlign.justify,
+    required this.events,
   });
 
-  final double textSize;
-  final TextAlign textAlign;
+  final List<EventModel> events;
+
+  @override
+  State<EventListWidget> createState() => _EventListWidgetState();
+}
+
+class _EventListWidgetState extends State<EventListWidget> {
+  List<EventModel> get _events => widget.events;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '''O Radioamadorismo é uma comunidade ativa ao redor do mundo. Nós radioamadores realizamos muitas atividades e temos a tradição de certificá-las. Atividadess como Eventos Formativos, Eventos Festivos, Field Days, Ativações especiais são algumas das atividades desenvolvidas. Porém, a entrega dos certificados sempre é uma atividade onerosa. Pensando nisso, surgiu o Ham Certificador como a ferramenta para entrega de certificados. Simples e fácil de usar!''',
-      textAlign: textAlign,
-      style: TextStyle(
-        fontFamily: 'Poppins',
-        fontSize: textSize,
-      ),
+    return GuaraniEventListWidget(
+      items: _events
+          .map(
+            (event) => GuaraniEventListItem(
+              name: event.name,
+              local: '${event.city} - ${event.state} - ${event.country}',
+              startDate: event.startAt,
+              imageUrl: event.imageUrl.isEmpty
+                  ? 'assets/placeholder.jpg'
+                  : event.imageUrl,
+              onTap: (_) {
+                if (event.hasPageDetails) {
+                  context.go('/home/event/${event.uid}');
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'event-details-no-available'.i18n(),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
+                  );
+                }
+              },
+            ),
+          )
+          .toList(),
     );
   }
 }

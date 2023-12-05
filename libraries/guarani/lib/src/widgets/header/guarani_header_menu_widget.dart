@@ -6,10 +6,12 @@ class GuaraniHeaderMenuWidget extends StatelessWidget
     super.key,
     this.showEvent = false,
     this.eventName,
+    this.translate,
   });
 
   final bool showEvent;
   final String? eventName;
+  final Function()? translate;
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +83,15 @@ class GuaraniHeaderMenuWidget extends StatelessWidget
                 ),
             ],
           ),
+          if (translate != null)
+            IconButton(
+              onPressed: translate,
+              icon: const Icon(
+                Icons.language,
+                color: Colors.white,
+                size: 30,
+              ),
+            ),
         ],
       ),
     );

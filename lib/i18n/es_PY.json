@@ -1,0 +1,16 @@
+{
+    "system-title": "Ham Certificator",
+    "select-language": "Seleccione el idioma",
+    "welcome-text": "¡Bienvenido!",
+    "hamcertificator-description": "La radioafición es una comunidad activa en todo el mundo. Los radioaficionados realizamos muchas actividades y tenemos la tradición de certificarlas. Actividades como Eventos de Capacitación, Eventos Festivo, Días de Campo, Activaciones Especiales son algunas de las actividades desarrolladas. Sin embargo, entregar certificados siempre es una actividad costosa. Teniendo esto en cuenta, surgió Ham Certificador como la herramienta para la entrega de certificados. ¡Simple y fácil de usar!",
+    "event-scheduler": "Cronograma",
+    "event-coming-soon": "Próximo Evento",
+    "event-info": "Selecciona el evento para obtener información.",
+    "event-details-no-available": "Datos del evento no disponibles",
+    "event-past": "Evento Celebrado",
+    "event-future": "Pronto",
+    "has-certification": "Certificação",
+    "certificate-title": "Certificados",
+    "certificate-info": "Selecciona el evento para descargar tu certificado",
+    "certificate-index": "El orden respeta el nombre del participante."
+}

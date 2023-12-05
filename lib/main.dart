@@ -8,6 +8,7 @@ import 'firebase_options.dart';
 
 import 'events/event_injections.dart';
 import 'home_page/home_page_injections.dart';
+import 'i18n/config/available_language_controller.dart';
 import 'participations/participation_injections.dart';
 import 'persons/person_injections.dart';
 
@@ -26,7 +27,13 @@ void main() async {
   eventInjections();
   certificatesInjections();
 
+  getIt.registerLazySingleton(
+    () => LanguageController(),
+  );
+
   runApp(
-    const MyApp(),
+    MyApp(
+      languageController: GetIt.I.get<LanguageController>(),
+    ),
   );
 }

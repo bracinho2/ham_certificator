@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/bracinho2/fvm/versions/3.10.1"
+export "FLUTTER_ROOT=/Users/bracinho2/fvm/versions/3.13.0"
 export "FLUTTER_APPLICATION_PATH=/Users/bracinho2/Desktop/APPs/ham_certificator/libraries/guarani"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_TARGET=lib/main.dart"

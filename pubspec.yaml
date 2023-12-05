@@ -12,6 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   guarani:
     path: libraries/guarani
 
@@ -26,9 +29,7 @@ dependencies:
   get_it: ^7.6.4
   cloud_firestore: ^4.13.1
   cloud_firestore_web: ^3.8.5
-  flutter_localizations:
-    sdk: flutter
-  intl: any
+  localization: ^2.1.1  
 
 dev_dependencies:
   flutter_test:
@@ -43,6 +44,7 @@ flutter:
   assets:
     - assets/
     - assets/events/
+    - lib/i18n/
 
   fonts:
     - family: Poppins
